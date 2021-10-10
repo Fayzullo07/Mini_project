@@ -23,7 +23,18 @@ class Users:
         """)
         space = input()
 
+        my_db = mysql.connector.connect(
+            host='localhost',
+            user="Fayzullo",
+            password="77777777"
+        )
+        my_cursor = my_db.cursor()
+        my_cursor.execute("create database if not exists Register")
+
+
+
     def entrance_system(self):
+        self.create_table()
         self.clear_screen()
         self.print_first_message()
         input_choice = input(">>>: ").strip()
@@ -193,6 +204,12 @@ class Users:
             return False
         else:
             return True
+
+    def create_table(self):
+        my_db = self.entrance_database()
+        my_cursor = my_db.cursor()
+        my_cursor.execute("create table if not exists users(ID int unsigned auto_increment primary key, Name varchar(30) not null, Age int(3) not null, Login varchar(30) not null, Password varchar(30) not null)")
+        my_db.commit()
 
 
 users = Users()
