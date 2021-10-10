@@ -23,9 +23,32 @@ class Users:
         else:
             self.log_in()
 
-
     def register(self):
-        pass
+        self.clear_screen()
+
+        input_name = input("Name: ").strip().capitalize()
+        while self.is_string_empty(input_name) or not input_name.isalpha():
+            self.clear_screen()
+            input_name = input("Name: ").strip().capitalize()
+
+        input_age = input("Age: ").strip()
+        while self.is_string_empty(input_age) or not input_age.isnumeric():
+            self.clear_screen()
+            input_age = input("Age: ").strip()
+
+        input_login = input("Login: ").strip().lower()
+        while self.is_string_empty(input_login) or not input_login.isalnum():
+            self.clear_screen()
+            input_login = input("Login: ").strip().lower()
+
+        input_password = input("Password: ").strip()
+        check_password = input("Confirm: ").strip()
+        while self.is_string_empty(input_password) or input_password != check_password:
+            self.clear_screen()
+            input_password = input("Password: ").strip()
+            check_password = input("Confirm: ").strip()
+
+
 
     def log_in(self):
         pass
