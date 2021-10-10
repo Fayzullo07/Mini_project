@@ -1,4 +1,5 @@
 import os
+import mysql.connector
 
 
 class Users:
@@ -48,6 +49,12 @@ class Users:
             input_password = input("Password: ").strip()
             check_password = input("Confirm: ").strip()
 
+        self.name = input_name
+        self.age = input_age
+        self.login = input_login
+        self.password = input_password
+        self.write_to_database()
+        self.entrance_system()
 
 
     def log_in(self):
@@ -81,7 +88,20 @@ class Users:
     def is_string_empty(str_):
         return not bool(str_)
 
+    @staticmethod
+    def entrance_database():
+        return mysql.connector.connect(
+            host="localhost",
+            user="Fayzullo",
+            password="77777777",
+            database='Register'
+        )
 
+    def write_to_database(self):
+        my_db = self.entrance_database()
+        my_cursor = my_db.cursor()
+        my_cursor.execute(f"insert into users (Name, Age, Login, Password) values ('{self.name}', {self.age}, '{self.login}', '{self.password}')")
+        my_db.commit()
 
 users = Users()
 users.entrance_system()
