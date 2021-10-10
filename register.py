@@ -12,6 +12,16 @@ class Users:
         self.options = ['1', '2', '3']
         self.list_login = []
         self.get_login()
+        self.clear_screen()
+        print("""
+        
+            +---------------------+
+           {   Let's go to System  }
+            +---------------------+
+            
+                    Enter
+        """)
+        space = input()
 
     def entrance_system(self):
         self.clear_screen()
@@ -110,7 +120,12 @@ class Users:
         self.entrance_system()
 
     def delete_account(self):
-        pass
+        self.clear_screen()
+        my_db = self.entrance_database()
+        my_cursor = my_db.cursor()
+        my_cursor.execute(f"delete from users where Login='{self.login}'")
+        my_db.commit()
+        self.entrance_system()
 
     def log_out(self):
         self.clear_screen()
@@ -121,8 +136,11 @@ class Users:
     @staticmethod
     def print_first_message():
         print("""
-        Register [1]
-        Login    [2]
+          +-------------+ 
+    [1]   |   Register  |
+          +-------------+
+    [2]   |    Login    |  
+          +-------------+
         """)
 
     @staticmethod
@@ -179,4 +197,3 @@ class Users:
 
 users = Users()
 users.entrance_system()
-
