@@ -69,10 +69,10 @@ class Users:
 
         self.login = input_login
 
-        input_password = input("Password: ").strip()
+        input_password = getpass.getpass("Password: ").strip()
         while self.is_string_empty(input_password) or self.password_true_of_login(input_password):
             self.clear_screen()
-            input_password = input("Password: ").strip()
+            input_password = getpass.getpass("Password: ").strip()
 
         self.clear_screen()
         self.print_second_message()
@@ -89,9 +89,25 @@ class Users:
         else:
             self.log_out()
 
-
     def update_login_and_password(self):
-        pass
+        self.clear_screen()
+        new_login = input("New Login: ").strip().lower()
+        while self.is_string_empty(new_login) or not new_login.isalnum() or new_login in self.list_login:
+            self.clear_screen()
+            new_login = input("New Login: ").strip().lower()
+
+        new_password = getpass.getpass("New Password: ").strip()
+        check_password = getpass.getpass("Confirm: ").strip()
+        while self.is_string_empty(new_password) or new_password != check_password:
+            self.clear_screen()
+            new_password = getpass.getpass("New Password: ").strip()
+            check_password = getpass.getpass("Confirm: ").strip()
+
+        my_db = self.entrance_database()
+        my_cursor = my_db.cursor()
+        my_cursor.execute(f"update users set Login='{new_login}', Password='{new_password}' where Login='{self.login}'")
+        my_db.commit()
+        self.entrance_system()
 
     def delete_account(self):
         pass
